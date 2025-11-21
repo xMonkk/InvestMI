@@ -1,0 +1,328 @@
+@import "leaflet/dist/leaflet.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #0a0f1f;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.glow-outline {
+  filter: drop-shadow(0 0 6px #00e1ff) drop-shadow(0 0 12px #00e1ff);
+  transition: all 0.2s ease;
+}
+
+.clicked-outline {
+  filter: drop-shadow(0 0 10px #a855f7) drop-shadow(0 0 20px #a855f7);
+  transition: all 0.25s ease;
+}
+
+.neon-glow {
+  text-shadow: 0 0 8px #22ff44, 0 0 16px #22ff44;
+}
+
+.app-root {
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(147, 51, 234, 0.18), transparent 55%),
+    #020617;
+}
+
+.sidebar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow:
+    0 0 0 1px rgba(148, 163, 184, 0.15),
+    0 18px 45px rgba(0, 0, 0, 0.65);
+  border-radius: 18px;
+  margin: 12px;
+  margin-right: 0;
+  overflow: auto !important;
+}
+
+.sidebar-header {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.sidebar-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(147, 51, 234, 0.18));
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  color: #e5e7eb;
+}
+
+.sidebar-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+}
+
+.sidebar-title {
+  font-size: 1.6rem;
+  margin-top: 0.85rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.sidebar-subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.accent-text {
+  color: #a855f7;
+}
+
+.sidebar-card {
+  margin-top: 1rem;
+  padding: 1.2rem 1rem 1.3rem;
+  border-radius: 16px;
+  background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.16), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(147, 51, 234, 0.23), transparent 60%),
+    rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+  animation: fadeInUp 0.45s ease-out;
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-location {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.9rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+
+.metric-pill {
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.92));
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(22px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  transform: translateY(0);
+  transition:
+    transform 0.25s ease-out,
+    box-shadow 0.25s ease-out,
+    border-color 0.25s ease-out;
+}
+
+.metric-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.95);
+  border-color: rgba(248, 250, 252, 0.7);
+}
+
+.metric-pill--green {
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+}
+
+.metric-pill--red {
+  box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.25);
+}
+
+.metric-pill--purple {
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.25);
+}
+
+.metric-pill--gold {
+  box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.25);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.metric-value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.metric-value.muted {
+  color: #9ca3af;
+}
+
+.sidebar-footer {
+  margin-top: 0.9rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.accent-soft {
+  color: #e5e7eb;
+}
+
+.sidebar-empty {
+  margin-top: 1.4rem;
+  padding: 1rem 0.4rem;
+}
+
+.skeleton-line {
+  height: 10px;
+  border-radius: 999px;
+  margin-bottom: 0.55rem;
+  background: linear-gradient(
+    90deg,
+    rgba(31, 41, 55, 0.7),
+    rgba(75, 85, 99, 0.6),
+    rgba(31, 41, 55, 0.7)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+}
+
+.skeleton-line--wide {
+  width: 90%;
+}
+
+.skeleton-line--mid {
+  width: 70%;
+}
+
+.skeleton-line--short {
+  width: 50%;
+}
+
+.sidebar-empty-text {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.map-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  padding-left: 10px;
+  gap: 12px;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #e5e7eb;
+}
+
+.map-title-block h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.map-title-block p {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.map-legend {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.map-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.legend-dot--hover {
+  background: #22d3ee;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+}
+
+.legend-dot--active {
+  background: #a855f7;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.9);
+}
+
+.map-shell-outer {
+  position: relative;
+  flex: 1;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.map-shell {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.8),
+    0 30px 80px rgba(15, 23, 42, 0.95);
+}
+
+.map-inner {
+  background-color: #020617;
+}
+
+.map-glow-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at top center, rgba(56, 189, 248, 0.12), transparent 55%),
+    radial-gradient(circle at bottom center, rgba(147, 51, 234, 0.14), transparent 55%);
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
